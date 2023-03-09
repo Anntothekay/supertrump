@@ -10,3 +10,7 @@ h1 {
   display: flex;
   justify-content: space-around;
 }
+.card-text-row.active {
+  background-color: #ED4264!important;
+  color:white;
+}
