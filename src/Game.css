@@ -8,5 +8,5 @@ h1 {
 
 .cards {
   display: flex;
-  justify-content: sp;
+  justify-content: space-around;
 }
