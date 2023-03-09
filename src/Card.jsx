@@ -1,41 +1,46 @@
 import * as React from 'react';
+import PropTypes from 'prop-types';
 
-export default function Card() {
-  return (
+import './Card.css';
+import Animal from './Animal';
+
+export default function Card({ animal, uncovered }) {
+  const front = (
     <div className="card">
-      <h1>Elefant</h1>
-      <img
-        alt="Elefant"
-        height="200"
-        width="200"
-        src={`${process.env.PUBLIC_URL}/placeholder.png`}
-      />
+      <h1>{animal.name}</h1>
+      {animal.image && (
+        <img
+          alt={animal.name}
+          src={`${process.env.PUBLIC_URL}/${animal.image}`}
+          height="200"
+          width="200"
+        />
+      )}
       <div className="card-text">
-        <div className="card-text-row">
-          <span className="card-text-property">Größe</span>
-          <span className="card-text-value">3.3 m</span>
-        </div>
-        <div className="card-text-row">
-          <span className="card-text-property">Gewicht</span>
-          <span className="card-text-value">6000 kg</span>
-        </div>
-        <div className="card-text-row">
-          <span className="card-text-property">Alter</span>
-          <span className="card-text-value">70 Jahre</span>
-        </div>
-        <div className="card-text-row">
-          <span className="card-text-property">Alter</span>
-          <span className="card-text-value">70 Jahre</span>
-        </div>
-        <div className="card-text-row">
-          <span className="card-text-property">Nachkommen</span>
-          <span className="card-text-value">1</span>
-        </div>
-        <div className="card-text-row">
-          <span className="card-text-property">Geschwindigkeit</span>
-          <span className="card-text-value">40 km/h</span>
-        </div>
+        {Object.keys(Animal.properties).map((property) => {
+          const animalProperty = Animal.properties[property];
+          return (
+            <div key={property} className="card-text-row">
+              <span className="card-text-property">{animalProperty.label}</span>
+              <span className="card-text-value">
+                {animal[property]}
+                &nbsp;
+                {animalProperty.unit}
+              </span>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
+  const back = <div className="card back" />;
+  if (uncovered) {
+    return front;
+  }
+  return back;
 }
+
+Card.propTypes = {
+  uncovered: PropTypes.bool.isRequired,
+  animal: PropTypes.instanceOf(Animal).isRequired,
+};
