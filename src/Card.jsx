@@ -23,8 +23,11 @@ export default function Card({
           const animalProperty = Animal.properties[property];
           return (
             <div
+              role="button"
+              tabIndex="0"
               key={property}
-              onClick={() => { onSelectProperty(property) }}
+              onClick={() => { onSelectProperty(property); }}
+              onKeyUp={() => { onSelectProperty(property); }}
               className={selectedProperty === property ? 'active card-text-row' : 'card-text-row'}
             >
               <span className="card-text-property">{animalProperty.label}</span>
@@ -49,6 +52,6 @@ export default function Card({
 Card.propTypes = {
   uncovered: PropTypes.bool.isRequired,
   animal: PropTypes.instanceOf(Animal).isRequired,
-  onSelectProperty: PropTypes.func,
-  selectedProperty: PropTypes.string,
+  onSelectProperty: PropTypes.func.isRequired,
+  selectedProperty: PropTypes.string.isRequired,
 };
